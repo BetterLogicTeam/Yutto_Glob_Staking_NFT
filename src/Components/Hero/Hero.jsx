@@ -1,5 +1,5 @@
 import React from "react";
-import './Hero.css'
+import "./Hero.css";
 
 function Hero() {
   return (
@@ -13,14 +13,15 @@ function Hero() {
         </picture>
 
         <div className="container h-full">
-          <div className="grid h-full items-center gap-4 md:grid-cols-12">
+          <div className="grid h-full items-center  md:grid-cols-12">
             <div className="col-span-6 hero flex h-full flex-col items-center justify-center py-10 md:items-start md:py-20 xl:col-span-4">
               <h1 className="text-jacarta-700 font-display mb-6 text-center text-5xl dark:text-white md:text-left lg:text-6xl xl:text-7xl">
-                BEST NFT Marketplace
+                Welcome to Jutto Club
               </h1>
               <p className="dark:text-jacarta-200 mb-8 text-center text-lg md:text-left">
-                Globnft is a marketing company that works to increase the holder
-                and usefulness of all types of cryptocurrencies.
+                An exclusive private-members club by Jutto. A private and unique
+                collection of 10000 NFT, which act as a membership for the Jutto
+                Club.
               </p>
               <div className="flex space-x-4">
                 <a
@@ -40,7 +41,11 @@ function Hero() {
             </div>
 
             <div class="col-span-6 xl:col-span-8 hero_div">
-              <div class="relative text-center md:pl-8 md:text-right">
+              <div className="home_maine_div">
+                <img src="group-ntf-02.png" className="gift" alt="" />
+                <img src="3D_elements.png" alt="" class="animate-fly hero2  " />
+              </div>
+              {/* <div class="relative text-center md:pl-8 md:text-right">
                 <svg
                   viewBox="0 0 200 200"
                   xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +80,7 @@ function Hero() {
                   alt=""
                   class="animate-fly emg hero2 absolute top-0 "
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

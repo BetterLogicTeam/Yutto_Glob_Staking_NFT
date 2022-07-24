@@ -14,7 +14,7 @@ function Carde() {
   <div class="container">
     <div class="mx-auto max-w-xl text-center">
       <h5 class="font-display text-center dark:text-white" style={{color:"#F067D8"}}>Our Speciality</h5>
-      <h1 class="font-display text-jacarta-700 mb-6 text-center text-4xl font-medium dark:text-white">
+      <h1 class="font-display text-jacarta-700  text-center text-4xl font-medium dark:text-white">
         BENEFITS OF Jutto CLUB NFTs
       </h1>
       <p class="dark:text-jacarta-200 mb-16 text-lg leading-normal">
@@ -41,7 +41,7 @@ function Carde() {
              <img src="item-02.png" alt="img"/>
           </div>
         </div>
-        <h3 class="font-display text-jacarta-700 mx-auto mb-4 max-w-[9.625rem] text-lg dark:text-white">
+        <h3 class="font-display text-jacarta-700 mx-auto max-w-[9.625rem] text-lg dark:text-white">
           Explore the Metaverse with us
         </h3>
      <p>By joining the Jutto Club, you will have access to every metaverse we enter. Plus there will be additional
@@ -54,7 +54,7 @@ function Carde() {
             <img src="item-05.png" alt="img"/>
           </div>
         </div>
-        <h3 class="font-display text-jacarta-700 mx-auto mb-4 max-w-[9.625rem] text-lg dark:text-white">
+        <h3 class="font-display text-jacarta-700 mx-auto  max-w-[9.625rem] text-lg dark:text-white">
           Display art in high resolution
         </h3>
         <p>All Jutto Club NFTs are available as high-resolution jpegs,
@@ -66,7 +66,7 @@ function Carde() {
               <img src="item-07.png" alt="img"/>
           </div>
         </div>
-        <h3 class="font-display text-jacarta-700 mx-auto mb-4 max-w-[9.625rem] text-lg dark:text-white">
+        <h3 class="font-display text-jacarta-700 mx-auto  max-w-[9.625rem] text-lg dark:text-white">
          Be part of a global community
         </h3>
         <p>Make authentic connections and become a part of a global community that empowers

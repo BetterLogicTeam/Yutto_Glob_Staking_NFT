@@ -20,6 +20,10 @@ import Index_main from './Components/Index_main';
 import Collection_main from './Components/Collection_main';
 import Mint_main from './Components/Mint_main'
 import About_main from './Components/About_main';
+import Benifits_main from './Components/Benifits_main';
+import Attributes_main from './Components/Attributes_main';
+import Roadmap_main from './Components/Roadmap_main';
+
 function App() {
   return (
     <div className="App">
@@ -30,6 +34,9 @@ function App() {
       <Route exact path="/About_main" element={<About_main/>} />
 
       <Route exact path="/Collection_main" element={<Collection_main />} />
+      <Route exact path="/Benifits_main" element={<Benifits_main />} />
+      <Route exact path="/Attributes_main" element={<Attributes_main />} />
+      <Route exact path="/Roadmap_main" element={<Roadmap_main />} />
       <Route exact path="/Mint_main" element={<Mint_main />} />
       </Routes>
       <Footer />

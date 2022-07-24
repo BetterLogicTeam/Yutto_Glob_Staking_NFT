@@ -2,3 +2,36 @@
 .para p{
     text-align: left;
 }
+
+.gift2{
+    width: 100% !important;
+}
+
+.hero3 {
+    position: absolute;
+    z-index: 1;
+    width: 40% !important;
+
+  }
+
+  @media screen and (max-width:600px) {
+    
+    .gift2{
+        width: auto !important;
+    }
+
+    .hero3{
+        width: auto !important;
+    }
+  }
+
+  @media (min-width:601px) and (max-width:800px) {
+    
+    .gift2{
+        width: auto !important;
+    }
+
+    .hero3{
+        width: auto !important;
+    }
+  }

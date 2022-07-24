@@ -1,11 +1,13 @@
 import React from 'react';
-import {BsFacebook}  from 'react-icons/bs'
+import {BsFacebook}  from 'react-icons/bs';
+import {IoLogoTwitter}  from 'react-icons/io';
+import {FaTelegramPlane}  from 'react-icons/fa';
 import './Footer.css'
 
 function Footer() {
   return (
     <div>
-        <footer class="dark:bg-jacarta-900 page-footer bg-white" style={{backgroundColor:"#0D102D"}}>
+        <footer class="dark:bg-jacarta-900 page-footer footer_main bg-white" style={{backgroundColor:"#0D102D"}}>
       <div class="container">
 	    <div class="grid grid-cols-12 gap-x-7 gap-y-14 pt-24 pb-12 md:grid-cols-12">
           <div class="col-span-3 md:col-span-4">
@@ -23,13 +25,13 @@ function Footer() {
                 <BsFacebook></BsFacebook>
               </a>
               <a href="#"  target="_blank" class="group">
-                <BsFacebook></BsFacebook>
+                <IoLogoTwitter></IoLogoTwitter>
               </a>
               <a href="#" target="_blank" class="group">
                 <BsFacebook></BsFacebook>
               </a>
              <a href="#" target="_blank"> 
-              <BsFacebook></BsFacebook>
+              <FaTelegramPlane></FaTelegramPlane>
               </a>
             </div>
           </div>

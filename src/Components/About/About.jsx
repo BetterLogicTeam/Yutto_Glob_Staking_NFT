@@ -10,9 +10,13 @@ function About() {
         </picture>
         <div class="container">
           <div class="lg:flex lg:justify-between">
+          <div className="home_maine_div">
+                <img src="group-ntf-03.png" className="gift2"  alt="" />
+                <img src="3D_elements.png" alt="" class="animate-fly hero3  " />
+              </div>
             {/* <!-- Info -->
             <!-- Image --> */}
-              <div class="lg:w-[55%]">
+              {/* <div class="lg:w-[55%]">
                 <div class="relative">
                   <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="mx-auto mt-8 w-[80%] rotate-[8deg]">
                     <defs>
@@ -27,13 +31,13 @@ function About() {
                       </clipPath>
                     </defs>
                     <g clip-path="url(#clipping)">
-                      {/* <!-- Bg image --> */}
+                      
                       <image href="group-ntf-03.png" width="180" height="180" clip-path="url(#clipping)"></image>
                     </g>
                   </svg>
                   <img src="3D_elements.png" alt="" class="animate-fly absolute top-0"/>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
               <div class="py-20 lg:w-[45%] lg:pl-16">
                 <h5 class="font-display dark:text-white" style={{color:"#F067D8"}}>About Us</h5>
                 <h2 class="text-jacarta-700 font-display mb-6 text-2xl light:text-white" style={{color:"#fff"}}>

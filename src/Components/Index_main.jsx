@@ -14,8 +14,8 @@ export default function Index_main() {
     <div className="App">
      <Hero />
      <About />
-     <Bring />
      <Carde />
+     <Bring />
      <Sell />
     </div>
   );
