@@ -22,3 +22,29 @@
 .benifits_mmm2 h2{
     font-weight: 600;
 }
+
+.plus{
+    background-color: rgb(118,74,244);
+    color: white;
+    font-size: 18px;
+}
+
+.minus{
+    background-color: rgb(118,74,244);
+    color: white;
+    font-size: 18px;
+}
+
+.mint_in{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.mint_bbbb{
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 100px;
+    align-items: center !important;
+}
