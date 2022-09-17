@@ -40,7 +40,7 @@ function About() {
               {/* </div> */}
               <div class="py-20 lg:w-[45%] lg:pl-16">
                 <h5 class="font-display dark:text-white" style={{color:"#F067D8"}}>About Us</h5>
-                <h2 class="text-jacarta-700 font-display mb-6 text-2xl light:text-white" style={{color:"#fff"}}>
+                <h2 class="text-jacarta-700 font-display mb-6 text-2xl light:text-white" style={{color:"#fff",fontWeight:"600"}}>
                   Jutto CLUB– YOUR KEY TO EXPLORING METAVERSE
                 </h2>
                 <p class="dark:text-jacarta-300 mb-8 text-lg leading-normal" style={{color:"#fff"}}>

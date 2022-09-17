@@ -10,14 +10,19 @@
 .hero_main {
   padding-top: 6rem !important;
   height: 100%;
+  font-family: 'cal-sans-semibold', sans-serif !important;
 }
 
 .hero h1 {
   text-align: left !important;
+  font-family: 'cal-sans-semibold', sans-serif;
+  font-weight: inherit;
 }
 
 .hero p {
   text-align: left !important;
+  color: rgb(90 93 121/var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
 }
 
 .hero a {
@@ -88,13 +93,20 @@
 @media (min-width:601px) and (max-width:768px) {
     
     .gift{
-        width: auto !important;
+        width: 300px !important;
     }
 
     .hero2{
-        width: auto !important;
+        width: 400px !important;
     }
   }
 
-@media (min-width: 2000px) {
+@media (min-width: 769px) and (max-width:1024px) {
+  .gift{
+    width: 400px !important;
+}
+
+.hero2{
+    width: 500px !important;
+}
 }

@@ -1,3 +1,14 @@
 .crade h1, h3{
     font-weight: bold;
 }
+
+.pppp{
+    color: rgb(90 93 121/var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
+}
+
+@media (min-width:620px) and (max-width:770px) {
+  .carde_hhh{
+    font-size: 17px !important;
+  }
+}

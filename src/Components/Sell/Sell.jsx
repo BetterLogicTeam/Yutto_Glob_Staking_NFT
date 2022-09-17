@@ -4,7 +4,7 @@ import './Sell.css'
 function Sell() {
   return (
     <div>
-        <section class="dark:bg-jacarta-800 relative py-24">
+        <section class="dark:bg-jacarta-800 benifits_mmm2 relative py-24">
         <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
      <img src="gradient.jpg" alt="gradient" class="h-full w-full"/>
    </picture>
