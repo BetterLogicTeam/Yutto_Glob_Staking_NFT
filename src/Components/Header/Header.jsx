@@ -4,9 +4,46 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { loadWeb3 } from "../../Api/Api";
+import { wirecontractadress, wirecontractabi } from "../../contracts/contract";
 import './Header.css';
 
 function Header() {
+
+  let [btnTxt, setBtTxt] = useState("Connect");
+  const [value, setValue] = useState("");
+  const [price_bnb, setprice_bnb] = useState();
+  const [collection, setCollection] = useState([]);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+
+    // console.log("value is:", event.target.value);
+  };
+  const Connect = async () => {
+    let acc = await loadWeb3();
+    // console.log("ACC=",acc)
+    if (acc == "No Wallet") {
+      setBtTxt("No Wallet");
+    } else if (acc == "Wrong Network") {
+      setBtTxt("Wrong Network");
+    } else {
+      let myAcc =
+        acc?.substring(0, 4) + "..." + acc?.substring(acc?.length - 4);
+      setBtTxt(myAcc);
+      const web3 = window.web3;
+      let wire_contract_instance = new web3.eth.Contract(
+        wirecontractabi,
+        wirecontractadress
+      );
+    }
+  }
+    
+
+    useEffect(() => {
+      Connect();
+    }, []);
 
   
   return (
@@ -39,6 +76,10 @@ function Header() {
             
             <Nav.Link className='hxn' href="#Mint">
             <Link to="/Mint_main">Mint</Link>
+            </Nav.Link>
+
+            <Nav.Link className='hxn' href="#Mint">
+            <Link to="/Mint_main" className="link_text" ><button className="btn btna_navbar_here">{btnTxt}</button></Link>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

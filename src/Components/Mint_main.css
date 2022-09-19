@@ -48,3 +48,12 @@
     margin-top: 100px;
     align-items: center !important;
 }
+
+@media screen and (max-width: 800px) {
+    .mint_bbbb2{
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+}

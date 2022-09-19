@@ -40,7 +40,7 @@ a:hover {
 } */
 
 .alna {
-  margin-left: 20rem;
+  margin-left: 12rem;
   /* float: right; */
 }
 
@@ -97,4 +97,12 @@ a:hover {
   .nav_main {
     width: auto !important;
   }
+}
+
+
+.btna_navbar_here{
+  background-color: blueviolet;
+  color: white;
+  padding: 7px;
+  margin-top: -7px;
 }
