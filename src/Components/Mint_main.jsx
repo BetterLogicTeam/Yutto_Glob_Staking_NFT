@@ -11,7 +11,7 @@ function Mint_main() {
   let [value, setValue] = useState(1);
 
   const increaseValue = () => {
-    if (value < 5) {
+    if (value < 10) {
       setValue(++value);
       console.log("setValue", value);
     }
@@ -310,21 +310,21 @@ function Mint_main() {
               </h1>
 
               <div class="mb-8 mint_in items-center space-x-4 whitespace-nowrap">
-                <div className="btn plus" onClick={() => increaseValue()}>
-                  +
+                <div className="btn plus" onClick={() => decreaseValue()}>
+                  -
                 </div>{" "}
                 <div class="">
                   <input
                     class="count-form"
                     type="text"
                     id="qa"
-                    value="1"
-                    Value={value}
+                    // value="1"
+                    value={value}
                     onChange={(e) => setValue(e.target.value)}
                   />
                 </div>{" "}
-                <div className="btn minus" onClick={() => decreaseValue()}>
-                  -
+                <div className="btn minus" onClick={() => increaseValue()}>
+                  +
                 </div>
               </div>
               {/* <!-- Creator / Owner --> */}
