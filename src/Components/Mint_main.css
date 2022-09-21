@@ -42,12 +42,12 @@
     margin-top: 100px;
 }
 
-.mint_bbbb{
+/* .mint_bbbb{
     display: flex !important;
     justify-content: center !important;
-    margin-top: 100px;
+    margin-top: 10px;
     align-items: center !important;
-}
+} */
 
 @media screen and (max-width: 800px) {
     .mint_bbbb2{
@@ -56,4 +56,31 @@
         align-items: center;
         text-align: center;
     }
+}
+
+.count-form{
+    width: 100px;
+    text-align: center;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.minus{
+    margin-right: 50px;
+}
+
+.token_price{
+    margin-top: 100px;
+    margin-left: 150px;
+}
+
+.price{
+    margin-top: 0px;
+    display: flex;
+    margin-right: 54px;
+    float: right;
+}
+
+.bttn{
+    margin-top: 10px;
 }
