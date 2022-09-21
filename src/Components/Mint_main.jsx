@@ -6,12 +6,19 @@ import { tokencontractadress, tokencontractabi } from "../contracts/contract";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
-
+import Form from 'react-bootstrap/Form';
 function Mint_main() {
   // let [btnOne, setButtonOne] = useState("Mint With BNB");
   let [value, setValue] = useState(1);
   let [mintPriceBnb, setMintPriceBnb] = useState(0);
   let [mintingtokenPrice, setMintingtokenPrice] = useState(0);
+  const [userid, setuserid] = useState()
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
 
   const increaseValue = () => {
@@ -90,73 +97,73 @@ function Mint_main() {
               let totalMintingPriceToken = value * mintingtokenPrice;
 
 
-              totalMintingPriceBNB   =  totalMintingPriceBNB + 0.0001;
+              totalMintingPriceBNB = totalMintingPriceBNB + 0.0001;
               totalMintingPriceToken = totalMintingPriceToken + 0.0001;
 
 
-              
-              
+
+
               // let getdata = await axios.get(
-                //   "https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"
-                // );
-                // getdata = getdata.data.price;
-                // let usid = totalMintingPriceBNB * getdata;
-                console.log("Here");
-               
-                  // if (parseInt(ttlSupply) < parseInt(maxSupply)) {
-                    // if (paused == false) {
-                    //   if (value < parseInt(maxLimitprTransaction)) {
-                        
-                        
-                        let tkkn = await tokenContractOf.methods
-                        .approve(wirecontractadress ,totalMintingPriceToken.toString())
-                        .send({from: acc});
-                        
+              //   "https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"
+              // );
+              // getdata = getdata.data.price;
+              // let usid = totalMintingPriceBNB * getdata;
+              console.log("Here");
+
+              // if (parseInt(ttlSupply) < parseInt(maxSupply)) {
+              // if (paused == false) {
+              //   if (value < parseInt(maxLimitprTransaction)) {
 
 
-                      let hash = await nftContractOf.methods
-                        .mint_with_token(value ,totalMintingPriceToken.toString())
-                        .send({
-                          from: acc,
-                          value: totalMintingPriceBNB.toString(),
-                        });
-                      setButtonOne("Mint With BNB");
-                      // console.log("hash", hash.transactionHash);
-                      // tkkn = tkkn.transactionHash;
-                      hash = hash.transactionHash;
-                      mintingbnbPrice = web3.utils.fromWei(
-                        mintingbnbPrice.toString()
-                      );
-                      let postapi = await axios.post(
-                        "https://whebuynft.herokuapp.com/buynfttoken",
-                        {
-                          uid: inputdatahere,
-                          address: acc,
-                          nft: value,
-                          token: mintingbnbPrice,
-                          txn: "hash",
-                        }
-                      );
-                      toast.success("Transaction Confirmed");
+              let tkkn = await tokenContractOf.methods
+                .approve(wirecontractadress, totalMintingPriceToken.toString())
+                .send({ from: acc });
 
-                      // console.log("postapi", postapi);
-                      toast.success(postapi.data.data);
-                      setinputdatahere(" ");
-                  //   } else {
-                  //     toast.error(
-                  //       "No of Minting is Greater than maximum limit Per Transaction"
-                  //     );
-                  //     setButtonOne("Mint With BNB");
-                  //   }
-                  // } else {
-                  //   toast.error("Paused is False");
-                  //   setButtonOne("Mint With BNB");
-                  // }
-                // } else {
-                //   toast.error("Max Supply is Greater than total Supply");
-                //   setButtonOne("Mint With BNB");
-                // }
-              
+
+
+              let hash = await nftContractOf.methods
+                .mint_with_token(value, totalMintingPriceToken.toString())
+                .send({
+                  from: acc,
+                  value: totalMintingPriceBNB.toString(),
+                });
+              setButtonOne("Mint With BNB");
+              // console.log("hash", hash.transactionHash);
+              // tkkn = tkkn.transactionHash;
+              hash = hash.transactionHash;
+              mintingbnbPrice = web3.utils.fromWei(
+                mintingbnbPrice.toString()
+              );
+              let postapi = await axios.post(
+                "https://whebuynft.herokuapp.com/buynfttoken",
+                {
+                  uid: inputdatahere,
+                  address: acc,
+                  nft: value,
+                  token: mintingbnbPrice,
+                  txn: "hash",
+                }
+              );
+              toast.success("Transaction Confirmed");
+
+              // console.log("postapi", postapi);
+              toast.success(postapi.data.data);
+              setinputdatahere(" ");
+              //   } else {
+              //     toast.error(
+              //       "No of Minting is Greater than maximum limit Per Transaction"
+              //     );
+              //     setButtonOne("Mint With BNB");
+              //   }
+              // } else {
+              //   toast.error("Paused is False");
+              //   setButtonOne("Mint With BNB");
+              // }
+              // } else {
+              //   toast.error("Max Supply is Greater than total Supply");
+              //   setButtonOne("Mint With BNB");
+              // }
+
             }
           } catch (e) {
             console.log("Error while minting ", e);
@@ -223,9 +230,20 @@ function Mint_main() {
     } catch (e) {
       console.log("Error while getting minting Price", e);
     }
-    
-  };
 
+  };
+  const CheckSponserid = async () => {
+    console.log('what is user id inside function', userid)
+    handleClose()
+    let res = await axios.get(`https://metahorse.herokuapp.com/checkuser?id=${userid}`);
+    console.log("res", res.data.data);
+    if (res.data.data == 1) {
+      myMintBNB()
+    }
+    else {
+      toast.error("user is not exsist")
+    }
+  }
   useEffect(() => {
     getMydata();
   }, []);
@@ -313,18 +331,8 @@ function Mint_main() {
               </div>
               {/* <!-- Creator / Owner --> */}
 
-              <div class="token_price">
-                    <a href="user.html" class="text-accent">
-                      <p class="text-sm font-bold">
-                        <h1 style={{ fontSize: "28px" }}>
-                          {mintingtokenPrice} Jutto Token
-                          {/* Price : {mintPriceBnb} BNB */}
-                        </h1>
-                      </p>
-                    </a>
-                  </div>
-              <div class="  mint_bbbb ">
-                <div class="mr-8  mint_bbbb2 flex">
+              <div className="d-lg-flex mt-5">
+                <div class="mr-8  mint_bbbb2 ms-5 ms-md-0 ">
                   <figure class="mr-4 shrink-0 bttn">
                     <a
                       href="#"
@@ -339,18 +347,35 @@ function Mint_main() {
                   </figure>
 
                 </div>
-
-                <div class="price">
-                    <a href="user.html" class="text-accent ">
+                <div>
+                  <div class="token_price">
+                    <a href="user.html" class="text-accent">
                       <p class="text-sm font-bold">
                         <h1 style={{ fontSize: "28px" }}>
-                          {/* {mintingtokenPrice} */}
-                          Price : {mintPriceBnb} BNB
+                          {mintingtokenPrice} Jutto Token
+                          {/* Price : {mintPriceBnb} BNB */}
                         </h1>
                       </p>
                     </a>
                   </div>
+                  <div class="  mint_bbbb ">
+
+
+                    <div class="">
+                      <a href="user.html" class="text-accent ">
+                        <p class="text-sm font-bold">
+                          <h1 style={{ fontSize: "28px" }}>
+                            {/* {mintingtokenPrice} */}
+                            Price : {mintPriceBnb} BNB
+                          </h1>
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
               </div>
+
               {/* <!-- Creator / Owner --> */}
               {/* <div class="mb-8 flex flex-wrap">
                 <div class="mr-8 mb-4 flex">
@@ -386,6 +411,31 @@ function Mint_main() {
           </div>
         </div>
       </section>
+      <Modal show={show} onHide={handleClose} className="" centered >
+        {/* <Modal.Header closeButton style={{ backgroundColor: "#3a1f05" }}>
+                                                        <Modal.Title className='text-white'>Sponser ID</Modal.Title>
+                                                    </Modal.Header> */}
+        <Modal.Body >
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Enter Id</Form.Label>
+            <Form.Control type="number" value={userid} onChange={(e) => setuserid(e.target.value)} className='' placeholder="Enter here" />
+
+          </Form.Group>
+
+          {/* <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                            <Form.Label>Password</Form.Label>
+                                                            <Form.Control type="text" className='text-white' placeholder="enter here" />
+                                                        </Form.Group> */}
+          {/* <a href="#" class="default-btn move-right" onClick={() => { CheckSponserid() }}>
+            <span >submit</span>{" "}
+          </a> */}
+          <div className="btn minus" onClick={() => { CheckSponserid() }}>
+            submit
+          </div>
+
+        </Modal.Body>
+
+      </Modal>
     </div>
   );
 }

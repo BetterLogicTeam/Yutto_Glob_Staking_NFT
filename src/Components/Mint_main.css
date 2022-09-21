@@ -1,41 +1,41 @@
-@media screen and (max-width:600px){
-    
-    .enput input{
+@media screen and (max-width:600px) {
+
+    .enput input {
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
     }
 
-    .lsc h1{
+    .lsc h1 {
         font-size: 20px !important;
     }
 }
 
-.container{
+.container {
     font-family: 'DM Sans', sans-serif;
 }
 
-.benifits_mmm h1{
+.benifits_mmm h1 {
     font-weight: 600;
 }
 
-.benifits_mmm2 h2{
+.benifits_mmm2 h2 {
     font-weight: 600;
 }
 
-.plus{
-    background-color: rgb(118,74,244);
+.plus {
+    background-color: rgb(118, 74, 244);
     color: white;
     font-size: 18px;
 }
 
-.minus{
-    background-color: rgb(118,74,244);
+.minus {
+    background-color: rgb(118, 74, 244);
     color: white;
     font-size: 18px;
 }
 
-.mint_in{
+.mint_in {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,7 @@
 } */
 
 @media screen and (max-width: 800px) {
-    .mint_bbbb2{
+    .mint_bbbb2 {
         flex-direction: column !important;
         justify-content: center;
         align-items: center;
@@ -58,29 +58,29 @@
     }
 }
 
-.count-form{
+.count-form {
     width: 100px;
     text-align: center;
     margin-left: 0px;
     margin-right: 0px;
 }
 
-.minus{
+.minus {
     margin-right: 50px;
 }
 
-.token_price{
-    margin-top: 100px;
-    margin-left: 150px;
+.token_price {
+    /* margin-top: 100px; */
+    /* margin-left: 150px; */
 }
 
-.price{
+.price {
     margin-top: 0px;
     display: flex;
     margin-right: 54px;
     float: right;
 }
 
-.bttn{
+.bttn {
     margin-top: 10px;
 }
