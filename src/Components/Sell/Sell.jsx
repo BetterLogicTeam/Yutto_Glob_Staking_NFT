@@ -80,14 +80,14 @@ function Sell() {
              for navigating Xhibiter
            </p>
  
-           <div class="mx-auto mt-7 max-w-md text-center">
+           {/* <div class="mx-auto mt-7 max-w-md text-center">
              <form class="relative">
                <input type="email" placeholder="Email address" class="dark:bg-jacarta-700 dark:border-jacarta-600 focus:ring-accent border-jacarta-100 w-full rounded-full border py-3 px-4 dark:text-white dark:placeholder-white"/>
                <button class="hover:bg-accent-dark font-display bg-accent absolute top-2 right-2 rounded-full px-6 py-2 text-sm text-white">
                  Subscribe
                </button>
              </form>
-           </div>
+           </div> */}
          </div>
        </section>
     </div>

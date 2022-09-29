@@ -26,7 +26,7 @@ import Roadmap_main from './Components/Roadmap_main';
 
 function App() {
   return (
-    <div className="App">
+    <div className="">
       <BrowserRouter>
       <Header />
       <Routes>

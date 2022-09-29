@@ -2,6 +2,15 @@
     font-weight: bold;
 }
 
+.crade h3{
+  font-size: 1.25rem;
+}
+
+.text-jacarta-500 {
+  --tw-text-opacity: 1;
+  color: rgb(90 93 121/var(--tw-text-opacity));
+}
+
 .pppp{
     color: rgb(90 93 121/var(--tw-text-opacity)) !important;
   --tw-text-opacity: 1;
