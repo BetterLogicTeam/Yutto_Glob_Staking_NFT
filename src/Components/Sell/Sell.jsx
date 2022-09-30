@@ -4,7 +4,7 @@ import './Sell.css'
 function Sell() {
   return (
     <div>
-        <section class="dark:bg-jacarta-800 benifits_mmm2 relative py-24">
+        <section class="dark:bg-jacarta-800 sell_main benifits_mmm2 relative py-24">
         <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
      <img src="gradient.jpg" alt="gradient" class="h-full w-full"/>
    </picture>
@@ -26,8 +26,8 @@ function Sell() {
                    </svg>
                  </div>
                </div>
-               <h3 class="font-display text-jacarta-700 mb-4 text-lg dark:text-white">1. Connect Your Wallet</h3>
-               <p class="dark:text-jacarta-300">
+               <h3 class="font-display  text-jacarta-700 mb-4 text-lg dark:text-white">1. Connect Your Wallet</h3>
+               <p class="dark:text-jacarta-300 para_graph">
                 Metamask to the Jutto Club site to mint a Jutto Club NFT
                </p>
              </div>
@@ -41,7 +41,7 @@ function Sell() {
                  </div>
                </div>
                <h3 class="font-display text-jacarta-700 mb-4 text-lg dark:text-white">2. Mint your NFT</h3>
-               <p class="dark:text-jacarta-300">
+               <p class="dark:text-jacarta-300 para_graph">
                  Mint a Jutto Club NFT to become a member of the exclusive Jutto Club
                </p>
              </div>
@@ -55,7 +55,7 @@ function Sell() {
                  </div>
                </div>
                <h3 class="font-display text-jacarta-700 mb-4 text-lg dark:text-white">3. Receive your membership</h3>
-               <p class="dark:text-jacarta-300">
+               <p class="dark:text-jacarta-300 para_graph">
                 Receive your membership in the form of Jutto Club NFT in your Metamask wallet
                </p>
              </div>
@@ -69,13 +69,13 @@ function Sell() {
                  </div>
                </div>
                <h3 class="font-display text-jacarta-700 mb-4 text-lg dark:text-white">4. Flaunt your membership</h3>
-               <p class="dark:text-jacarta-300">
+               <p class="dark:text-jacarta-300 para_graph">
                  Use the Jutto Club NFT as your display picture on social media platforms to flaunt your membership to this exclusive members-only club
                </p>
              </div>
            </div>
  
-           <p class="text-jacarta-700 mx-auto mt-20 max-w-2xl text-center text-lg dark:text-white">
+           <p class="text-jacarta-700 last_para mx-auto mt-20 max-w-2xl text-center text-lg dark:text-white">
              Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks
              for navigating Xhibiter
            </p>

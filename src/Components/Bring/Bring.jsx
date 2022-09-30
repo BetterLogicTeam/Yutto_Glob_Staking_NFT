@@ -4,7 +4,7 @@ import './Bring.css'
 function Bring() {
   return (
     <div>
-        <section class="relative benifits_mmm pt-32 pb-24">
+        <section class="relative benifits_mmm road_main pt-32 pb-24">
   <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
     <img src="gradient.jpg" alt="gradient" class="h-full w-full"/>
   </picture>

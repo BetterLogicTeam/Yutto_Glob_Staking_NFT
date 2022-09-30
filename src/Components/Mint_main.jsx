@@ -250,7 +250,7 @@ function Mint_main() {
 
   return (
     <div>
-      <section class="relative lg:py-24" style={{ paddingTop: "130px" }}>
+      <section class="relative mint_main lg:py-24" style={{ paddingTop: "130px" }}>
         <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
           <img src="gradient_light.jpg" alt="gradient" class="h-full" />
         </picture>

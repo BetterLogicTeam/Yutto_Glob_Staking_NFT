@@ -4,7 +4,7 @@ import './About.css'
 function About() {
   return (
     <div>
-        <section Class="bg-accent dark:bg-jacarta-800 relative py-24">
+        <section Class="bg-accent about_main dark:bg-jacarta-800 relative py-24">
         <picture class="pointer-events-none absolute inset-0 -z-10 dark:hidden">
           <img src="gradient_light.jpg" alt="gradient" class="h-full w-full"/>
         </picture>

@@ -15,10 +15,10 @@ function Hero() {
         <div className="container h-full">
           <div className="grid h-full items-center  md:grid-cols-12">
             <div className="col-span-6 hero flex h-full flex-col items-center justify-center py-10 md:items-start md:py-20 xl:col-span-4">
-              <h1 className="text-jacarta-700 font-display mb-6 text-center text-5xl dark:text-white md:text-left lg:text-6xl xl:text-7xl">
+              <h1 className="text-jacarta-700  font-display mb-6 text-center text-5xl dark:text-white md:text-left lg:text-6xl xl:text-7xl">
                 Welcome to Jutto Club
               </h1>
-              <p className="dark:text-jacarta-200 mb-8 text-center text-lg md:text-left">
+              <p className="dark:text-jacarta-200 para_graph mb-8 text-center text-lg md:text-left">
                 An exclusive private-members club by Jutto. A private and unique
                 collection of 10000 NFT, which act as a membership for the Jutto
                 Club.
