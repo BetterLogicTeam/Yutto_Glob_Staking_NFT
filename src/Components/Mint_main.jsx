@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Mint_main.css";
 import { loadWeb3 } from "../Api/Api";
-import { wirecontractadress, wirecontractabi } from "../contracts/contract";
-import { tokencontractadress, tokencontractabi } from "../contracts/contract";
+import { wireNftContractAddress, wireNftContractAbi } from "../contracts/contract";
+import { wireTokenAddress, wireTokenAbi } from "../contracts/contract";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
@@ -10,9 +10,13 @@ import Form from 'react-bootstrap/Form';
 function Mint_main() {
   // let [btnOne, setButtonOne] = useState("Mint With BNB");
   let [value, setValue] = useState(1);
-  let [mintPriceBnb, setMintPriceBnb] = useState(0);
+  // let [mintPriceBnb, setMintPriceBnb] = useState(0);
   let [mintingtokenPrice, setMintingtokenPrice] = useState(0);
   const [userid, setuserid] = useState()
+  let [mintPriceWire, setmintPriceWire] = useState(0);
+  let [mintPriceBnb, setMintPriceBnb] = useState(0);
+  let [btnOne, setButtonOne] = useState("Mint With BNB");
+    let [btnTwo, setButtonTwo] = useState("Mint With JTO");
 
   const [show, setShow] = useState(false);
 
@@ -35,203 +39,460 @@ function Mint_main() {
     }
   };
   // const [users, setUsers] = useState([])
-  let [btnOne, setButtonOne] = useState("Mint With BNB");
+  // let [btnOne, setButtonOne] = useState("Mint With BNB");
   const [inputdatahere, setinputdatahere] = useState("100");
 
+
+
+
+
+
+
   const myMintBNB = async () => {
-    // console.log("res",inputValue)
-    // setShowModal(false)
     let acc = await loadWeb3();
     // console.log("ACC=",acc)
     if (acc == "No Wallet") {
-      toast.error("No Wallet Connected");
-    } else if (acc == "Wrong Network") {
-      toast.error("Wrong Newtwork please connect to test net");
+        toast.error("No Wallet Connected")
+    }
+    else if (acc == "Wrong Network") {
+        toast.error("Wrong Newtwork please connect to test net")
     } else {
-      try {
-        let res = await axios.get(
-          `https://whebuynft.herokuapp.com/checkuser?id=${inputdatahere}`
-        );
-        // console.log("resdatahere", res.data);
-        res = res.data.data;
-
-        if (res == 1) {
-          try {
-            setButtonOne("Please Wait While Processing");
-            // console.log("mintFor BNB");
+        try {
+            setButtonOne("Please Wait While Processing")
+            console.log("mintFor BNB");
             const web3 = window.web3;
-            let nftContractOf = new web3.eth.Contract(
-              wirecontractabi,
-              wirecontractadress
-            );
+            let nftContractOf = new web3.eth.Contract(wireNftContractAbi, wireNftContractAddress);
+            let maxSupply = await nftContractOf.methods.maxsupply().call();
+            let ttlSupply = await nftContractOf.methods.totalSupply().call();
+            let paused = await nftContractOf.methods.paused().call();
+            let maxLimitprTransaction = await nftContractOf.methods.MaxLimitPerTransaction().call();
+            let mintingbnbPrice = await nftContractOf.methods.MinitngPricein_MATIC().call()
+            console.log("jjjjj", mintingbnbPrice);
+            mintingbnbPrice = web3.utils.fromWei(mintingbnbPrice);
+            mintingbnbPrice = parseFloat(mintingbnbPrice)
+            setMintPriceBnb(mintingbnbPrice)
+            let totalMintingPriceBNB = value * mintingbnbPrice
+            console.log("maxSupply", maxSupply);
+            console.log("ttlSupply", maxLimitprTransaction);
 
-            let tokenContractOf = new web3.eth.Contract(
-              tokencontractabi,
-              tokencontractadress
-            );
+            console.log("mintingbnbPrice", mintingbnbPrice);
 
-
-            let totalnft = await nftContractOf.methods
-              .ValueinToken()
-              .call();
-
-            // console.log("totalnft", totalnft);
-
-            if (value > totalnft) {
-              toast.error(`Maximum Limit is ${totalnft} `);
-            } else {
-              let maxSupply = await nftContractOf.methods.maxsupply().call();
-
-              let ttlSupply = await nftContractOf.methods.totalSupply().call();
-              let paused = await nftContractOf.methods.paused().call();
-              let maxLimitprTransaction = await nftContractOf.methods
-                .MaxLimitPerTransaction()
-                .call();
-              let mintingbnbPrice = await nftContractOf.methods.ValueinToken().call();
-              let mintingtokenPrice = await nftContractOf.methods.Valueinbnb().call();
-
-              mintingbnbPrice = parseFloat(mintingbnbPrice);
-              mintingtokenPrice = parseFloat(mintingtokenPrice);
-
-              let totalMintingPriceBNB = value * mintingbnbPrice;
-              let totalMintingPriceToken = value * mintingtokenPrice;
-
-
-              totalMintingPriceBNB = totalMintingPriceBNB + 0.0001;
-              totalMintingPriceToken = totalMintingPriceToken + 0.0001;
+            let llisted_check = await nftContractOf.methods.iswhitelist(acc).call()
+            console.log("iswhitelist", llisted_check);
 
 
 
+            if (llisted_check == 'true') {
+                if (parseInt(ttlSupply) < parseInt(maxSupply)) {
+                    if (paused == false) {
+                        if (value < parseInt(maxLimitprTransaction)) {
+                            console.log("Minting Value= ", value);
+                            console.log("Minting totalMintingPriceBNB= ", totalMintingPriceBNB);
 
-              // let getdata = await axios.get(
-              //   "https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"
-              // );
-              // getdata = getdata.data.price;
-              // let usid = totalMintingPriceBNB * getdata;
-              console.log("Here");
+                            totalMintingPriceBNB = web3.utils.toWei(totalMintingPriceBNB.toString())
+                            await nftContractOf.methods.mint_with_MATIC(value).send({
+                                from: acc,
+                                value: totalMintingPriceBNB.toString()
 
-              // if (parseInt(ttlSupply) < parseInt(maxSupply)) {
-              // if (paused == false) {
-              //   if (value < parseInt(maxLimitprTransaction)) {
+                            })
+                            toast.success("Transaction Confirmed")
+                            setButtonOne("Mint With BNB")
 
+                        } else {
+                            toast.error("No of Minting is Greater than maximum limit Per Transaction")
+                            setButtonOne("Mint With BNB")
 
-              let tkkn = await tokenContractOf.methods
-                .approve(wirecontractadress, totalMintingPriceToken.toString())
-                .send({ from: acc });
+                        }
+                    } else {
+                        toast.error("Paused is False")
+                        setButtonOne("Mint With BNB")
 
+                    }
 
+                } else {
+                    toast.error("Max Supply is Greater than total Supply")
+                    setButtonOne("Mint With BNB")
 
-              let hash = await nftContractOf.methods
-                .mint_with_token(value, totalMintingPriceToken.toString())
-                .send({
-                  from: acc,
-                  value: totalMintingPriceBNB.toString(),
-                });
-              setButtonOne("Mint With BNB");
-              // console.log("hash", hash.transactionHash);
-              // tkkn = tkkn.transactionHash;
-              hash = hash.transactionHash;
-              mintingbnbPrice = web3.utils.fromWei(
-                mintingbnbPrice.toString()
-              );
-              let postapi = await axios.post(
-                "https://whebuynft.herokuapp.com/buynfttoken",
-                {
-                  uid: inputdatahere,
-                  address: acc,
-                  nft: value,
-                  token: mintingbnbPrice,
-                  txn: "hash",
                 }
-              );
-              toast.success("Transaction Confirmed");
+            }
+            else {
+                let BusdPrice = await nftContractOf.methods.WhitelistMintingPricein_MATIC().call();
 
-              // console.log("postapi", postapi);
-              toast.success(postapi.data.data);
-              setinputdatahere(" ");
-              //   } else {
-              //     toast.error(
-              //       "No of Minting is Greater than maximum limit Per Transaction"
-              //     );
-              //     setButtonOne("Mint With BNB");
-              //   }
-              // } else {
-              //   toast.error("Paused is False");
-              //   setButtonOne("Mint With BNB");
-              // }
-              // } else {
-              //   toast.error("Max Supply is Greater than total Supply");
-              //   setButtonOne("Mint With BNB");
-              // }
+                await nftContractOf.methods.mint_with_MATIC(value).send({
+                    from: acc,
+                    value: value * BusdPrice.toString()
+                })
+
+
+                toast.success("Transaction Confirmed")
+                setButtonOne("Mint With BNB")
+
 
             }
-          } catch (e) {
-            console.log("Error while minting ", e);
-            toast.error("Transaction failed");
-            setButtonOne("Mint With BNB");
-          }
-        } else {
-          toast.error("User Is Not Exists");
-          setinputdatahere(" ");
-        }
-      } catch (e) {
-        setinputdatahere(" ");
-        toast.error("User Is Not Exists");
-      }
-    }
-  };
 
-  let bnb_mint = async () => {
+
+
+
+        } catch (e) {
+            console.log("Error while minting ", e)
+            toast.error("Transaction failed")
+            setButtonOne("Mint With BNB")
+
+        }
+
+    }
+}
+const myMintWire = async () => {
     let acc = await loadWeb3();
     // console.log("ACC=",acc)
     if (acc == "No Wallet") {
-      alert("No Wallet");
-    } else if (acc == "Wrong Network") {
-      alert("Wrong Network");
-    } else {
-      const web3 = window.web3;
-      let wire_contract_instance = new web3.eth.Contract(
-        wirecontractabi,
-        wirecontractadress
-      );
-
-      const maxlimite = await wire_contract_instance.methods
-        .ValueinToken()
-        .call();
-      console.log("token_valu", maxlimite);
+        toast.error("No Wallet Connected")
     }
-  };
+    else if (acc == "Wrong Network") {
+        toast.error("Wrong Newtwork please connect to test net")
+    } else {
+        try {
+            setButtonTwo("Please Wait While Processing")
+            console.log("mintFor Wire");
+            const web3 = window.web3;
+            let nftContractOf = new web3.eth.Contract(wireNftContractAbi, wireNftContractAddress);
+            let wireContractOf = new web3.eth.Contract(wireTokenAbi, wireTokenAddress);
+            let userBusdBalance = await wireContractOf.methods.balanceOf(acc).call();
+            userBusdBalance = web3.utils.fromWei(userBusdBalance)
+            let maxSupply = await nftContractOf.methods.maxsupply().call();
+            let ttlSupply = await nftContractOf.methods.totalSupply().call();
+            let paused = await nftContractOf.methods.paused().call();
+            let maxLimitprTransaction = await nftContractOf.methods.MaxLimitPerTransaction().call();
+            let mintingWirePrice = await nftContractOf.methods.MinitngPricein_MMX().call()
+            mintingWirePrice = web3.utils.fromWei(mintingWirePrice);
+            mintingWirePrice = parseFloat(mintingWirePrice)
+            setmintPriceWire(mintingWirePrice);
+            let totalMintingPriceWire = value * mintingWirePrice
+            console.log("maxSupply", maxSupply);
+            console.log("ttlSupply", maxLimitprTransaction);
 
+            console.log("mintingWirePrice", mintingWirePrice);
+            let llisted_check = await nftContractOf.methods.iswhitelist(acc).call()
+            console.log("iswhitelist", llisted_check);
+
+
+            if (llisted_check == 'true') {
+
+                if (parseInt(ttlSupply) < parseInt(maxSupply)) {
+                    if (paused == false) {
+                        if (value < parseInt(maxLimitprTransaction)) {
+                            if (parseFloat(userBusdBalance) >= totalMintingPriceWire) {
+                                console.log("Minting Value= ", value);
+                                console.log("Minting totalMintingPriceWire= ", totalMintingPriceWire);
+
+                                totalMintingPriceWire = web3.utils.toWei(totalMintingPriceWire.toString())
+                                await wireContractOf.methods.approve(wireNftContractAddress, totalMintingPriceWire).send({
+                                    from: acc
+                                })
+                                toast.success("Transaction Confirmed")
+                                setButtonTwo("Please Wait for Second Confirmation")
+                                await nftContractOf.methods.mint_with_MMX(value, totalMintingPriceWire.toString()).send({
+                                    from: acc,
+                                })
+                                toast.success("Transaction Succefful")
+                                setButtonTwo("Mint With JTO")
+
+                            } else {
+                                toast.error("Out Of Balance")
+                                setButtonTwo("Mint With JTO")
+
+                            }
+
+                        } else {
+                            toast.error("No of Minting is Greater than maximum limit Per Transaction")
+                            setButtonTwo("Mint With JTO")
+
+                        }
+                    } else {
+                        toast.error("Paused is False")
+                        setButtonTwo("Mint With JTO")
+
+                    }
+
+                } else {
+                    toast.error("Max Supply is Greater than total Supply")
+                    setButtonTwo("Mint With JTO")
+
+                }
+
+            }
+            else {
+
+                let BusdPrice = await nftContractOf.methods.WhitelistMinitngPricein_MMX().call();
+                totalMintingPriceWire = web3.utils.toWei(totalMintingPriceWire.toString())
+                await wireContractOf.methods.approve(wireNftContractAddress, totalMintingPriceWire).send({
+                    from: acc
+                })
+
+                let a = web3.utils.fromWei(BusdPrice);
+                a = parseFloat(a)
+                let b = a * value;
+                let c = web3.utils.toWei(b.toString());
+
+                await nftContractOf.methods.mint_with_MMX(value, c).send({
+                    from: acc,
+                })
+
+
+                setButtonTwo("Mint With JTO")
+
+
+            }
+
+
+        } catch (e) {
+            console.log("Error while minting ", e)
+            toast.error("Transaction failed")
+            setButtonTwo("Mint With JTO")
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
+  // const myMintBNB = async () => {
+  //   // console.log("res",inputValue)
+  //   // setShowModal(false)
+  //   let acc = await loadWeb3();
+  //   // console.log("ACC=",acc)
+  //   if (acc == "No Wallet") {
+  //     toast.error("No Wallet Connected");
+  //   } else if (acc == "Wrong Network") {
+  //     toast.error("Wrong Newtwork please connect to test net");
+  //   } else {
+  //     try {
+  //       let res = await axios.get(
+  //         `https://whebuynft.herokuapp.com/checkuser?id=${inputdatahere}`
+  //       );
+  //       // console.log("resdatahere", res.data);
+  //       res = res.data.data;
+
+  //       if (res == 1) {
+  //         try {
+  //           setButtonOne("Please Wait While Processing");
+  //           // console.log("mintFor BNB");
+  //           const web3 = window.web3;
+  //           let nftContractOf = new web3.eth.Contract(
+  //             wirecontractabi,
+  //             wirecontractadress
+  //           );
+
+  //           let tokenContractOf = new web3.eth.Contract(
+  //             tokencontractabi,
+  //             tokencontractadress
+  //           );
+
+
+  //           let totalnft = await nftContractOf.methods
+  //             .MinitngPricein_MMX()
+  //             .call();
+
+  //           // console.log("totalnft", totalnft);
+
+  //           if (value > totalnft) {
+  //             toast.error(`Maximum Limit is ${totalnft} `);
+  //           } else {
+  //             let maxSupply = await nftContractOf.methods.maxsupply().call();
+
+  //             let ttlSupply = await nftContractOf.methods.totalSupply().call();
+  //             let paused = await nftContractOf.methods.paused().call();
+  //             let maxLimitprTransaction = await nftContractOf.methods
+  //               .MaxLimitPerTransaction()
+  //               .call();
+  //             let mintingbnbPrice = await nftContractOf.methods.MinitngPricein_MMX().call();
+  //             let mintingtokenPrice = await nftContractOf.methods.MinitngPricein_MATIC().call();
+
+  //             mintingbnbPrice = parseFloat(mintingbnbPrice);
+  //             mintingtokenPrice = parseFloat(mintingtokenPrice);
+
+  //             let totalMintingPriceBNB = value * mintingbnbPrice;
+  //             let totalMintingPriceToken = value * mintingtokenPrice;
+
+
+  //             totalMintingPriceBNB = totalMintingPriceBNB + 0.0001;
+  //             totalMintingPriceToken = totalMintingPriceToken + 0.0001;
+
+
+
+
+  //             // let getdata = await axios.get(
+  //             //   "https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT"
+  //             // );
+  //             // getdata = getdata.data.price;
+  //             // let usid = totalMintingPriceBNB * getdata;
+  //             console.log("Here");
+
+  //             // if (parseInt(ttlSupply) < parseInt(maxSupply)) {
+  //             // if (paused == false) {
+  //             //   if (value < parseInt(maxLimitprTransaction)) {
+
+
+  //             let tkkn = await tokenContractOf.methods
+  //               .approve(wirecontractadress, totalMintingPriceToken.toString())
+  //               .send({ from: acc });
+
+
+
+  //             let hash = await nftContractOf.methods
+  //               .mint_with_MMX(value, totalMintingPriceToken.toString())
+  //               .send({
+  //                 from: acc,
+  //                 value: totalMintingPriceBNB.toString(),
+  //               });
+  //             setButtonOne("Mint With BNB");
+  //             // console.log("hash", hash.transactionHash);
+  //             // tkkn = tkkn.transactionHash;
+  //             hash = hash.transactionHash;
+  //             mintingbnbPrice = web3.utils.fromWei(
+  //               mintingbnbPrice.toString()
+  //             );
+  //             let postapi = await axios.post(
+  //               "https://whebuynft.herokuapp.com/buynfttoken",
+  //               {
+  //                 uid: inputdatahere,
+  //                 address: acc,
+  //                 nft: value,
+  //                 token: mintingbnbPrice,
+  //                 txn: "hash",
+  //               }
+  //             );
+  //             toast.success("Transaction Confirmed");
+
+  //             // console.log("postapi", postapi);
+  //             toast.success(postapi.data.data);
+  //             setinputdatahere(" ");
+  //             //   } else {
+  //             //     toast.error(
+  //             //       "No of Minting is Greater than maximum limit Per Transaction"
+  //             //     );
+  //             //     setButtonOne("Mint With BNB");
+  //             //   }
+  //             // } else {
+  //             //   toast.error("Paused is False");
+  //             //   setButtonOne("Mint With BNB");
+  //             // }
+  //             // } else {
+  //             //   toast.error("Max Supply is Greater than total Supply");
+  //             //   setButtonOne("Mint With BNB");
+  //             // }
+
+  //           }
+  //         } catch (e) {
+  //           console.log("Error while minting ", e);
+  //           toast.error("Transaction failed");
+  //           setButtonOne("Mint With BNB");
+  //         }
+  //       } else {
+  //         toast.error("User Is Not Exists");
+  //         setinputdatahere(" ");
+  //       }
+  //     } catch (e) {
+  //       setinputdatahere(" ");
+  //       toast.error("User Is Not Exists");
+  //     }
+  //   }
+  // };
+
+  // let bnb_mint = async () => {
+  //   let acc = await loadWeb3();
+  //   // console.log("ACC=",acc)
+  //   if (acc == "No Wallet") {
+  //     alert("No Wallet");
+  //   } else if (acc == "Wrong Network") {
+  //     alert("Wrong Network");
+  //   } else {
+  //     const web3 = window.web3;
+  //     let wire_contract_instance = new web3.eth.Contract(
+  //       wirecontractabi,
+  //       wirecontractadress
+  //     );
+
+  //     const maxlimite = await wire_contract_instance.methods
+  //       .MinitngPricein_MMX()
+  //       .call();
+  //     console.log("token_valu", maxlimite);
+  //   }
+  // };
+
+
+  // const getMydata = async () => {
+  //   let acc = await loadWeb3();
+
+  //   try {
+  //     const web3 = window.web3;
+  //     let nftContractOf = new web3.eth.Contract(
+  //       wirecontractabi,
+  //       wirecontractadress
+  //     );
+
+  //     let mintingtokenPrice = await nftContractOf.methods.MinitngPricein_MMX().call();
+  //     let mintingbnbPrice = await nftContractOf.methods.MinitngPricein_MATIC().call();
+  //     console.log("Value", mintingbnbPrice);
+  //     console.log("tokenValue", mintingtokenPrice);
+
+
+  //     mintingbnbPrice = web3.utils.fromWei(mintingbnbPrice);
+  //     mintingbnbPrice = parseFloat(mintingbnbPrice).toFixed(3);
+  //     setMintPriceBnb(mintingbnbPrice);
+
+  //     mintingtokenPrice = web3.utils.fromWei(mintingtokenPrice);
+  //     mintingtokenPrice = parseFloat(mintingtokenPrice).toFixed(4);
+  //     setMintingtokenPrice(mintingtokenPrice);
+
+  //   } catch (e) {
+  //     console.log("Error while getting minting Price", e);
+  //   }
+
+  // };
 
   const getMydata = async () => {
     let acc = await loadWeb3();
-
-    try {
-      const web3 = window.web3;
-      let nftContractOf = new web3.eth.Contract(
-        wirecontractabi,
-        wirecontractadress
-      );
-
-      let mintingtokenPrice = await nftContractOf.methods.ValueinToken().call();
-      let mintingbnbPrice = await nftContractOf.methods.Valueinbnb().call();
-      console.log("Value", mintingbnbPrice);
-      console.log("tokenValue", mintingtokenPrice);
-
-
-      mintingbnbPrice = web3.utils.fromWei(mintingbnbPrice);
-      mintingbnbPrice = parseFloat(mintingbnbPrice).toFixed(4);
-      setMintPriceBnb(mintingbnbPrice);
-
-      mintingtokenPrice = web3.utils.fromWei(mintingtokenPrice);
-      mintingtokenPrice = parseFloat(mintingtokenPrice).toFixed(4);
-      setMintingtokenPrice(mintingtokenPrice);
-
-    } catch (e) {
-      console.log("Error while getting minting Price", e);
+    // console.log("ACC=",acc)
+    if (acc == "No Wallet") {
+        toast.error("No Wallet Connected")
     }
+    else if (acc == "Wrong Network") {
+        toast.error("Wrong Newtwork please connect to test net")
+    } else {
 
-  };
+        try {
+            console.log("mintFor BUSD");
+            const web3 = window.web3;
+            let nftContractOf = new web3.eth.Contract(wireNftContractAbi, wireNftContractAddress);
+            // let mintingBusdPrice = await nftContractOf.methods.MinitngPricein_BUSD().call()
+            // mintingBusdPrice = web3.utils.fromWei(mintingBusdPrice);
+            // mintingBusdPrice = parseFloat(mintingBusdPrice)
+            // setMintPriceBUSD(mintingBusdPrice)
+
+            let mintingWirePrice = await nftContractOf.methods.MinitngPricein_MMX().call()
+            mintingWirePrice = web3.utils.fromWei(mintingWirePrice);
+            mintingWirePrice = parseFloat(mintingWirePrice)
+            setmintPriceWire(mintingWirePrice);
+
+            let mintingbnbPrice = await nftContractOf.methods.MinitngPricein_MATIC().call()
+            mintingbnbPrice = web3.utils.fromWei(mintingbnbPrice);
+            mintingbnbPrice = parseFloat(mintingbnbPrice)
+            setMintPriceBnb(mintingbnbPrice)
+        } catch (e) {
+            console.log("Error while getting minting Price");
+        }
+    }
+}
+
+
+
+
   const CheckSponserid = async () => {
     console.log('what is user id inside function', userid)
     handleClose()
@@ -340,7 +601,7 @@ function Mint_main() {
                       data-bs-target="#placeBidModal"
                       class="bg-accent shadow-accent-volume hover:bg-accent-dark inline-block w-full 
                     rounded-full py-3 px-8 text-center font-semibold text-white transition-all"
-                      onClick={() => myMintBNB()}
+                    onClick={() => myMintBNB()}
                     >
                       {btnOne}
                     </a>
@@ -352,7 +613,7 @@ function Mint_main() {
                     <a href="user.html" class="text-accent">
                       <p class="text-sm font-bold">
                         <h1 style={{ fontSize: "28px" }}>
-                          {mintingtokenPrice} Jutto Token
+                         
                           {/* Price : {mintPriceBnb} BNB */}
                         </h1>
                       </p>
@@ -371,12 +632,63 @@ function Mint_main() {
                         </p>
                       </a>
                     </div>
+                    
+                  </div>
+                </div>
+
+              </div>
+
+
+
+              <div className="d-lg-flex mt-5">
+                <div class="mr-8  mint_bbbb2 ms-5 ms-md-0 ">
+                  <figure class="mr-4 shrink-0 bttn">
+                    <a
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#placeBidModal"
+                      class="bg-accent shadow-accent-volume hover:bg-accent-dark inline-block w-full 
+                    rounded-full py-3 px-8 text-center font-semibold text-white transition-all"
+                    onClick={() => myMintWire()}
+                    >
+                      {btnTwo}
+                    </a>
+                  </figure>
+
+                </div>
+                <div>
+                  <div class="token_price">
+                    <a href="user.html" class="text-accent">
+                      <p class="text-sm font-bold">
+                        <h1 style={{ fontSize: "28px" }}>
+                         
+                          {/* Price : {mintPriceBnb} BNB */}
+                        </h1>
+                      </p>
+                    </a>
+                  </div>
+                  <div class="  mint_bbbb ">
+
+
+                    <div class="">
+                      <a href="user.html" class="text-accent ">
+                        <p class="text-sm font-bold">
+                          <h1 style={{ fontSize: "28px" }}>
+                            {/* {mintingtokenPrice} */}
+                            Price :{mintPriceWire} JTO
+                          </h1>
+                        </p>
+                      </a>
+                    </div>
+                    
                   </div>
                 </div>
 
               </div>
 
               {/* <!-- Creator / Owner --> */}
+
+              
               {/* <div class="mb-8 flex flex-wrap">
                 <div class="mr-8 mb-4 flex">
                   <figure class="mr-4 shrink-0">
@@ -386,7 +698,7 @@ function Mint_main() {
                   </figure>
                   <div class="flex flex-col justify-center">
                      <a href="user.html" class="text-accent block">
-                      <span class="text-sm font-bold"><h1 style={{fontSize:"28px"}}>Price : 0 JTO</h1></span>
+                      <span class="text-sm font-bold"><h1 style={{fontSize:"28px"}}> {mintingtokenPrice} Jutto Token</h1></span>
                     </a>
                   </div>
                 </div>
@@ -441,3 +753,14 @@ function Mint_main() {
 }
 
 export default Mint_main;
+
+
+
+
+
+// let totalMintingPriceBNB = value * mintingbnbPrice;
+// let totalMintingPriceToken = value * mintingtokenPrice;
+
+
+// totalMintingPriceBNB = totalMintingPriceBNB + 0.0001;
+// totalMintingPriceToken = totalMintingPriceToken + 0.0001;

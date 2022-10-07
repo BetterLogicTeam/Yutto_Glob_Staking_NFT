@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { wirecontractadress, wirecontractabi } from '../contracts/contract';
+import { wireNftContractAddress, wireNftContractAbi } from '../contracts/contract';
 import { toast } from "react-toastify";
 import { loadWeb3 } from '../Api/Api';
 // import Spinner from '../../Loading_Spinner/Spinner';
@@ -15,7 +15,7 @@ function Collection_main() {
     try {
       const web3 = window.web3
       let Data_Array = []
-      let contractOf_Own = new web3.eth.Contract(wirecontractabi, wirecontractadress)
+      let contractOf_Own = new web3.eth.Contract(wireNftContractAbi, wireNftContractAddress)
       console.log('metamaskadress', acc)
       let WalletOwnOf = await contractOf_Own.methods.walletOfOwner(acc).call();
       let wallet_Length = WalletOwnOf.length

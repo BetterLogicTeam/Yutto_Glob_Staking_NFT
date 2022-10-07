@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import { loadWeb3 } from "../../Api/Api";
-import { wirecontractadress, wirecontractabi } from "../../contracts/contract";
+import { wireNftContractAddress, wireNftContractAbi } from "../../contracts/contract";
 import './Header.css';
 
 function Header() {
@@ -34,8 +34,8 @@ function Header() {
       setBtTxt(myAcc);
       const web3 = window.web3;
       let wire_contract_instance = new web3.eth.Contract(
-        wirecontractabi,
-        wirecontractadress
+        wireNftContractAbi,
+        wireNftContractAddress
       );
     }
   }
